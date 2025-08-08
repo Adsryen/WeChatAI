@@ -32,16 +32,20 @@ class BaseAIClient:
         if self.session:
             await self.session.close()
     
+    async def get_models(self):
+        """获取模型列表"""
+        raise NotImplementedError
+
     async def test_connection(self) -> ConnectionTestResult:
         """测试连接"""
         raise NotImplementedError
-    
+
     async def chat_completion(self, request: ChatCompletionRequest) -> ChatCompletionResponse:
         """聊天完成"""
         raise NotImplementedError
-    
+
     async def stream_chat_completion(
-        self, 
+        self,
         request: ChatCompletionRequest,
         on_chunk: Callable[[str], None]
     ) -> AsyncGenerator[str, None]:
@@ -59,6 +63,15 @@ class OpenAICompatibleClient(BaseAIClient):
             timeout=config.timeout
         )
     
+    async def get_models(self):
+        """获取模型列表"""
+        try:
+            models = await self.client.models.list()
+            return [model.id for model in models.data]
+        except Exception as e:
+            print(f"获取模型列表失败: {e}")
+            return []
+
     async def test_connection(self) -> ConnectionTestResult:
         """测试连接"""
         start_time = time.time()
@@ -144,12 +157,21 @@ class OpenAICompatibleClient(BaseAIClient):
 
 class GeminiClient(BaseAIClient):
     """Gemini客户端"""
-    
+
     def __init__(self, config: AIProviderConfig):
         super().__init__(config)
         genai.configure(api_key=config.api_key)
         self.model = genai.GenerativeModel(config.model)
-    
+
+    async def get_models(self):
+        """获取模型列表"""
+        try:
+            # Gemini的模型列表相对固定，返回常用模型
+            return ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-pro"]
+        except Exception as e:
+            print(f"获取Gemini模型列表失败: {e}")
+            return ["gemini-1.5-flash"]
+
     async def test_connection(self) -> ConnectionTestResult:
         """测试连接"""
         start_time = time.time()
