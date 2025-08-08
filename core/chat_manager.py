@@ -18,7 +18,7 @@ class ChatManager:
         self.config = config_manager
         self.ai = ai_manager
         self.db = db_manager
-        self.wx = WeChat()  # 直接初始化 WeChat 实例
+        self.wx = None  # 延迟初始化 WeChat 实例
         self.running = False
         self.groups = set(self.config.get_groups())  # 从配置中加载群组
         self._task = None
@@ -29,12 +29,13 @@ class ChatManager:
         """添加监听群组"""
         try:
             if group_name not in self.groups:
-                # 直接添加群组
-                self.wx.AddListenChat(who=group_name, savepic=False)
-                
+                # 如果 WeChat 实例已初始化且正在运行，则立即添加监听
+                if self.wx is not None and self.running:
+                    self.wx.AddListenChat(who=group_name, savepic=False)
+
                 self.groups.add(group_name)
                 self.last_messages[group_name] = set()  # 初始化消息集合
-                
+
                 # 保存配置
                 groups = list(self.groups)
                 self.config.set_groups(groups)
@@ -54,17 +55,21 @@ class ChatManager:
         """启动聊天管理器"""
         if self.running:
             return False
-        
+
         try:
+            # 初始化 WeChat 实例
+            if self.wx is None:
+                self.wx = WeChat()
+
             print("微信登录账号:", self.wx.nickname)
-            
+
             # 初始化监听
             for group in self.groups:
                 self.wx.AddListenChat(who=group, savepic=False)
                 if group not in self.last_messages:
                     self.last_messages[group] = set()
                 print(f"已开始监听微信群: {group}")
-            
+
             self.running = True
             return True
         except Exception as e:
@@ -87,11 +92,12 @@ class ChatManager:
             self.last_messages.clear()
             
             # 移除所有监听
-            for group in self.groups:
-                try:
-                    self.wx.RemoveListenChat(group)
-                except:
-                    pass
+            if self.wx is not None:
+                for group in self.groups:
+                    try:
+                        self.wx.RemoveListenChat(group)
+                    except:
+                        pass
             
             print("聊天管理器已停止")
             
