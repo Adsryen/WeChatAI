@@ -98,14 +98,20 @@ class ModernLineEdit(QLineEdit):
                 border-radius: 8px;
                 padding: 10px 12px;
                 font-size: 14px;
+                color: #1D1D1F;
                 selection-background-color: #007AFF;
+                selection-color: white;
             }
             QLineEdit:focus {
                 border-color: #007AFF;
                 background-color: #FAFBFF;
+                color: #1D1D1F;
             }
             QLineEdit:hover {
                 border-color: #C7C7CC;
+            }
+            QLineEdit::placeholder {
+                color: #86868B;
             }
         """)
 
@@ -121,9 +127,16 @@ class ModernComboBox(QComboBox):
                 padding: 8px 12px;
                 min-height: 20px;
                 font-size: 14px;
+                color: #1D1D1F;
+                selection-background-color: #007AFF;
+                selection-color: white;
             }
             QComboBox:focus {
                 border-color: #007AFF;
+                color: #1D1D1F;
+            }
+            QComboBox:hover {
+                border-color: #C7C7CC;
             }
             QComboBox::drop-down {
                 border: none;
@@ -135,6 +148,14 @@ class ModernComboBox(QComboBox):
                 border-right: 5px solid transparent;
                 border-top: 5px solid #86868B;
                 margin-right: 5px;
+            }
+            QComboBox QAbstractItemView {
+                background-color: white;
+                border: 1px solid #E5E5EA;
+                border-radius: 6px;
+                color: #1D1D1F;
+                selection-background-color: #007AFF;
+                selection-color: white;
             }
         """)
 
@@ -151,11 +172,14 @@ class ModernTextEdit(QTextEdit):
                 border-radius: 8px;
                 padding: 10px 12px;
                 font-size: 14px;
+                color: #1D1D1F;
                 selection-background-color: #007AFF;
+                selection-color: white;
             }
             QTextEdit:focus {
                 border-color: #007AFF;
                 background-color: #FAFBFF;
+                color: #1D1D1F;
             }
             QTextEdit:hover {
                 border-color: #C7C7CC;
@@ -198,6 +222,82 @@ class SettingsDialog(QDialog):
                 color: #86868B;
                 font-size: 12px;
                 margin-bottom: 8px;
+            }
+            QLineEdit {
+                color: #1D1D1F;
+                background-color: white;
+                border: 2px solid #E5E5EA;
+                border-radius: 8px;
+                padding: 10px 12px;
+                font-size: 14px;
+                selection-background-color: #007AFF;
+                selection-color: white;
+            }
+            QLineEdit:focus {
+                border-color: #007AFF;
+                background-color: #FAFBFF;
+                color: #1D1D1F;
+            }
+            QLineEdit:hover {
+                border-color: #C7C7CC;
+            }
+            QLineEdit::placeholder {
+                color: #86868B;
+            }
+            QTextEdit {
+                color: #1D1D1F;
+                background-color: white;
+                border: 2px solid #E5E5EA;
+                border-radius: 8px;
+                padding: 10px 12px;
+                font-size: 14px;
+                selection-background-color: #007AFF;
+                selection-color: white;
+            }
+            QTextEdit:focus {
+                border-color: #007AFF;
+                background-color: #FAFBFF;
+                color: #1D1D1F;
+            }
+            QTextEdit:hover {
+                border-color: #C7C7CC;
+            }
+            QComboBox {
+                color: #1D1D1F;
+                background-color: white;
+                border: 2px solid #E5E5EA;
+                border-radius: 8px;
+                padding: 8px 12px;
+                min-height: 20px;
+                font-size: 14px;
+                selection-background-color: #007AFF;
+                selection-color: white;
+            }
+            QComboBox:focus {
+                border-color: #007AFF;
+                color: #1D1D1F;
+            }
+            QComboBox:hover {
+                border-color: #C7C7CC;
+            }
+            QComboBox::drop-down {
+                border: none;
+                width: 20px;
+            }
+            QComboBox::down-arrow {
+                image: none;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid #86868B;
+                margin-right: 5px;
+            }
+            QComboBox QAbstractItemView {
+                background-color: white;
+                border: 1px solid #E5E5EA;
+                border-radius: 6px;
+                color: #1D1D1F;
+                selection-background-color: #007AFF;
+                selection-color: white;
             }
             QTabWidget::pane {
                 border: none;

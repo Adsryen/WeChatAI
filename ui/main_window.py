@@ -176,9 +176,16 @@ class MainWindow(QMainWindow):
                 border: 1px solid #D2D2D7;
                 border-radius: 4px;
                 padding: 2px 5px;
-                color: #007AFF;
+                color: #1D1D1F;
                 font-size: 12px;
                 height: 24px;
+                selection-background-color: #007AFF;
+                selection-color: white;
+            }
+            QLineEdit:focus {
+                border-color: #007AFF;
+                background-color: white;
+                color: #1D1D1F;
             }
         """)
         self.trigger_edit.textChanged.connect(self.update_trigger_word)
@@ -379,6 +386,13 @@ class MainWindow(QMainWindow):
                 padding: 5px;
                 font-size: 13px;
                 min-height: 25px;
+                color: #1D1D1F;
+                selection-background-color: #007AFF;
+                selection-color: white;
+            }
+            QLineEdit:focus {
+                border-color: #007AFF;
+                color: #1D1D1F;
             }
             QPushButton {
                 background-color: #007AFF;
